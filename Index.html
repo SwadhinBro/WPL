@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIFYLIVE - Live Match Streaming</title>
+    
+    <!-- Video.js CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/video.js@8.0.4/dist/video-js.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1565577631-47c0bb5c193b') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .title {
+            font-size: 35px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-container {
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .moving-text {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: rgba(0, 136, 204, 0.85);
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 5px;
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .moving-text a {
+            color: white;
+            text-decoration: none;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+
+        .moving-text span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">CRIFYLIVE</div>
+
+    <div class="player-container">
+        <div class="moving-text">
+            <span><a href="https://t.me/CRICFyLive" target="_blank">📢 Join @YourChannel for Live Updates</a></span>
+        </div>
+
+        <div class="video-container">
+            <video id="liveStream" class="video-js vjs-default-skin" controls autoplay>
+                <!-- Replace this URL with your valid stream URL -->
+                <source src="
+                  https://jcevents.jiocinema.com/bpk-tv/Sports18_Khel_voot_MOB/Fallback/hdntl=exp=1740210574~acl=%2f*~id=d10094d21727b83d854f53350b926451~data=hdntl~hmac=cb1d819e84bcce8e6ce940eb189e0693c50f97c936efb19c05770bcb2bea6c45/index.m3u8" type="application/x-mpegURL">
+                Your browser does not support video playback.
+            </video>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/video.js@8.0.4/dist/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        var video = document.getElementById('liveStream');
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource("https://jcevents.jiocinema.com/bpk-tv/Sports18_Khel_voot_MOB/Fallback/hdntl=exp=1740210574~acl=%2f*~id=d10094d21727b83d854f53350b926451~data=hdntl~hmac=cb1d819e84bcce8e6ce940eb189e0693c50f97c936efb19c05770bcb2bea6c45/index.m3u8"); // Updated Test Stream URL
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = "https://jcevents.jiocinema.com/bpk-tv/Sports18_Khel_voot_MOB/Fallback/hdntl=exp=1740210574~acl=%2f*~id=d10094d21727b83d854f53350b926451~data=hdntl~hmac=cb1d819e84bcce8e6ce940eb189e0693c50f97c936efb19c05770bcb2bea6c45/index.m3u8"; // Updated Test Stream URL
+            video.addEventListener('loadedmetadata', function() {
+                video.play();
+            });
+        }
+    </script>
+
+</body>
+</html>
